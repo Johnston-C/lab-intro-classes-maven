@@ -4,10 +4,10 @@ Some explorations with the basics of classes in Java
 
 ---
 
-YOUR NAMES HERE
+Cade Johnston, Ben Sheeley
 
 We got through Exercise: ###
 
 ACKNOWLEDGEMENTS
 
-This code may be found at <https://github.com/FILL_IN_THE_REST>.
+This code may be found at <https://github.com/Johnston-C/lab-intro-classes-maven>.

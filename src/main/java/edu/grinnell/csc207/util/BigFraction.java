@@ -6,7 +6,7 @@ import java.math.BigInteger;
  * A simple implementation of arbitrary-precision Fractions.
  *
  * @author Samuel A. Rebelsky
- * @author YOUR NAME HERE
+ * @author Cade Johnston, Ben Sheeley
  */
 public class BigFraction {
   // +------------------+---------------------------------------------
@@ -58,8 +58,9 @@ public class BigFraction {
    *   The denominator of the fraction.
    */
   public BigFraction(BigInteger numerator, BigInteger denominator) {
-    this.num = numerator;
-    this.denom = denominator;
+    BigInteger gcd = numerator.gcd(denominator);
+    this.num = numerator.divide(gcd);
+    this.denom = denominator.divide(gcd);
   } // BigFraction(BigInteger, BigInteger)
 
   /**
@@ -75,6 +76,9 @@ public class BigFraction {
   public BigFraction(int numerator, int denominator) {
     this.num = BigInteger.valueOf(numerator);
     this.denom = BigInteger.valueOf(denominator);
+    BigInteger gcd = this.num.gcd(this.denom);
+    this.num = this.num.divide(gcd);
+    this.denom = this.denom.divide(gcd);
   } // BigFraction(int, int)
 
   /**
@@ -86,8 +90,12 @@ public class BigFraction {
    *   The fraction in string form
    */
   public BigFraction(String str) {
-    this.num = DEFAULT_NUMERATOR;
-    this.denom = DEFAULT_DENOMINATOR;
+    String[] numDenomArr = str.split("/", 0);
+    this.num = new BigInteger(numDenomArr[0]);
+    this.denom = new BigInteger(numDenomArr[1]);
+    BigInteger gcd = this.num.gcd(this.denom);
+    this.num = this.num.divide(gcd);
+    this.denom = this.denom.divide(gcd);
   } // BigFraction
 
   // +---------+------------------------------------------------------
@@ -125,6 +133,28 @@ public class BigFraction {
     // Return the computed value
     return new BigFraction(resultNumerator, resultDenominator);
   } // add(BigFraction)
+
+  public BigFraction subtract(BigFraction subend) {
+    BigInteger resultNumerator;
+    BigInteger resultDenominator;
+    resultDenominator = this.denom.multiply(subend.denom);
+    resultNumerator = 
+      (this.num.multiply(subend.denom)).subtract(subend.num.multiply(this.denom));
+
+      return new BigFraction(resultNumerator, resultDenominator);
+  }
+
+  public BigFraction multiply(BigFraction x) {
+    return new BigFraction(this.num.multiply(x.num),this.denom.multiply(x.denom));
+  }
+
+  public BigFraction divide(BigFraction x) {
+    return new BigFraction(this.num.multiply(x.denom),this.denom.multiply(x.num));
+  }
+
+  public BigFraction fractional(){
+    return new BigFraction(this.num.mod(this.denom),this.denom); 
+  }
 
   /**
    * Get the denominator of this fraction.
