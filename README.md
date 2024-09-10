@@ -6,7 +6,7 @@ Some explorations with the basics of classes in Java
 
 Cade Johnston, Ben Sheeley
 
-We got through Exercise: ###
+We got through Exercise: 7, and Extra 3
 
 ACKNOWLEDGEMENTS
 
